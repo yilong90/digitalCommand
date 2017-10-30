@@ -87,7 +87,7 @@ void notifyCVResetFactoryDefault()
 	//When anything is writen to CV8 reset to defaults. 
 
 	resetCVToDefault();	 
-	Serial.println("Resetting...");
+	//Serial.println("Resetting...");
 	delay(1000);  //typical CV programming sends the same command multiple times - specially since we dont ACK. so ignore them by delaying
 
 	resetFunc();
@@ -97,7 +97,7 @@ void notifyCVResetFactoryDefault()
 void resetCVToDefault()
 {
 	//CVをデフォルトにリセット
-	Serial.println("CVs being reset to factory defaults");
+	//Serial.println("CVs being reset to factory defaults");
 	
 	for (int j=0; j < FactoryDefaultCVIndex; j++ ){
 		Dcc.setCV( FactoryDefaultCVs[j].CV, FactoryDefaultCVs[j].Value);
@@ -108,15 +108,15 @@ void resetCVToDefault()
 
 extern void	   notifyCVChange( uint16_t CV, uint8_t Value){
    //CVが変更されたときのメッセージ
-   Serial.print("CV "); 
-   Serial.print(CV); 
-   Serial.print(" Changed to "); 
-   Serial.println(Value, DEC);
+   //Serial.println("CV "); 
+   //Serial.println(CV); 
+   //Serial.println(" Changed to "); 
+   //Serial.println(Value, DEC);
 };
 
 void notifyCVAck(void)
 {
-  Serial.println("notifyCVAck");
+  //Serial.println("notifyCVAck");
   
   analogWrite(MOTOR_PWM_B, 0);
   analogWrite(MOTOR_PWM_A, 64);
@@ -132,8 +132,8 @@ void setup()
 	uint8_t cv_value;
 	
 	//シリアル通信開始
-	Serial.begin(115200);
-
+	Serial.begin(9600);
+	Serial.println(1111111111);
 	//D9,D10 PWM キャリア周期:31kHz
 	TCCR1B &= B11111000;
 	TCCR1B |= B00000001;
@@ -175,14 +175,14 @@ void setup()
 
   #if !defined(DECODER_DONT_DEFAULT_CV_ON_POWERUP)
 	if ( Dcc.getCV(CV_MULTIFUNCTION_PRIMARY_ADDRESS) == 0xFF ){	 //if eeprom has 0xFF then assume it needs to be programmed
-	  Serial.println("CV Defaulting due to blank eeprom");
+	  //Serial.println("CV Defaulting due to blank eeprom");
 	  notifyCVResetFactoryDefault(); //将FactoryDefaultCVs 写入EEPROM
 	  
    } else{
-	 Serial.println("CV Not Defaulting");
+	 //Serial.println("CV Not Defaulting");
    }
   #else
-	 Serial.println("CV Defaulting Always On Powerup");
+	 //Serial.println("CV Defaulting Always On Powerup");
 	 notifyCVResetFactoryDefault();
   #endif 
   
@@ -204,20 +204,20 @@ void setup()
   gCV4_DecRatio = Dcc.getCV( CV_DECCRATIO ) ;//减速时间
   gCVx_LAddr = (Dcc.getCV( CV_MULTIFUNCTION_EXTENDED_ADDRESS_MSB ) << 8) + Dcc.getCV( CV_MULTIFUNCTION_EXTENDED_ADDRESS_LSB );
   
-  Serial.print("CV1(ShortAddr): ");
-  Serial.println(gCV1_SAddr);
-  Serial.print("CV17/18(LongAddr): ");
-  Serial.println(gCVx_LAddr);
-  Serial.print("CV2(Vstart): ");
-  Serial.println(gCV2_Vstart);
-  Serial.print("CV3(AccRatio): ");
-  Serial.println(gCV3_AccRatio);
-  Serial.print("CV2(DecRatio): ");
-  Serial.println(gCV4_DecRatio);
+  //Serial.println("CV1(ShortAddr): ");
+  //Serial.println(gCV1_SAddr);
+  //Serial.println("CV17/18(LongAddr): ");
+  //Serial.println(gCVx_LAddr);
+  //Serial.println("CV2(Vstart): ");
+  //Serial.println(gCV2_Vstart);
+  //Serial.println("CV3(AccRatio): ");
+  //Serial.println(gCV3_AccRatio);
+  //Serial.println("CV2(DecRatio): ");
+  //Serial.println(gCV4_DecRatio);
   
   
   
-  Serial.println("Ready");
+  //Serial.println("Ready");
   
 	 
 }
@@ -296,8 +296,8 @@ void Motor_Control()
 		}
 	}
 
-	//Serial.print("PWM: ");
-	//Serial.println(aSpeedRef_offseted >> 8);
+	////Serial.println("PWM: ");
+	////Serial.println(aSpeedRef_offseted >> 8);
 
 	
 }
@@ -358,14 +358,14 @@ extern void notifyDccSpeed( uint16_t Addr, uint8_t Speed, uint8_t ForwardDir, ui
 	
 	
 	// デバッグメッセージ
-	Serial.print("Speed - ADR: ");
-	Serial.print(Addr);
-	Serial.print(", SPD: ");
-	Serial.print(Speed);
-	Serial.print(", DIR: ");
-	Serial.print(ForwardDir);
-	Serial.print(", MAX: ");
-	Serial.println(MaxSpeed);
+	//Serial.println("Speed - ADR: ");
+	//Serial.println(Addr);
+	//Serial.println(", SPD: ");
+	//Serial.println(Speed);
+	//Serial.println(", DIR: ");
+	//Serial.println(ForwardDir);
+	//Serial.println(", MAX: ");
+	//Serial.println(MaxSpeed);
 
 }
 
