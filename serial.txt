@@ -19,3 +19,36 @@ CV2(Vstart): 16
 CV3(AccRatio): 64
 CV2(DecRatio): 64
 Ready
+
+
+Desktop Station Empty Box 4g
+2017 June 18
+
+Ioffset=0
+Iavg=0
+Data(BIN)=0
+AddressCheck: 0bit=255, 1bit=0
+Bits->0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+DataB(BIN)=1111111111111111
+CV read retry
+0=0, 
+0=0, 
+0=0, 
+0=0, 
+0=0, 
+0=0, 
+0=0, 
+0=0, 
+Bits->0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+DataB(BIN)=1111111111111111
+0=0, 
+0=0, 
+0=0, 
+0=0, 
+0=0, 
+0=0, 
+0=0, 
+0=0, 
+Bits->0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+DataB(BIN)=1111111111111111
+CV read Failed!
