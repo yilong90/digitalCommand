@@ -22,7 +22,7 @@
  * 
  *************************************************/
 
-//#define DEBUG			//リリースのときはコメントアウトすること
+#define DEBUG			//リリースのときはコメントアウトすること
 #define MAN_VER_NUMBER  03   /* Release Ver CV07 */
 #define MAN_ID_NUMBER 108  /* Manufacture ID */
 
@@ -64,7 +64,6 @@
 #define CV_MP3_F1 111             //F01 Function
 #define CV_MP3_F2 112             //F02 Function
 #define CV_FUNCSTATE 200
-
 #define WAIT_VOLMP3		20        //MP3 Volumeの通信ウェイト
 
 /*************************************************
@@ -679,9 +678,9 @@ extern void notifyDccSpeed( uint16_t Addr, DCC_ADDR_TYPE AddrType, uint8_t Speed
 	Serial.print(", SPD: ");
 	Serial.print(Speed);
 	Serial.print(", DIR: ");
-	Serial.print(ForwardDir);
+//	Serial.print(ForwardDir);
 	Serial.print(", MAX: ");
-	Serial.println(MaxSpeed);
+//	Serial.println(MaxSpeed);
 #endif
 
 }
