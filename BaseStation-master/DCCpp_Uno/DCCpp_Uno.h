@@ -41,7 +41,7 @@ Part of DCC++ BASE STATION for the Arduino
 
 #elif defined  ARDUINO_AVR_MEGA2560
 
-  #define ARDUINO_TYPE    "MEGA"
+  #define ARDUINO_TYPE    "MEGA" b 
 
   #define DCC_SIGNAL_PIN_MAIN 12          // Arduino Mega - uses OC1B
   #define DCC_SIGNAL_PIN_PROG 2           // Arduino Mega - uses OC3B

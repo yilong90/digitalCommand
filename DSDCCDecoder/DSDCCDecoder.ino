@@ -132,7 +132,7 @@ void setup()
 	uint8_t cv_value;
 	
 	//シリアル通信開始
-	Serial.begin(115200);
+	Serial.begin(9600);
 
 	//D9,D10 PWM キャリア周期:31kHz
 	TCCR1B &= B11111000;

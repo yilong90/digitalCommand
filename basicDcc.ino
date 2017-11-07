@@ -89,7 +89,7 @@ extern void    notifyCVChange( uint16_t CV, uint8_t Value){
 
 void setup() {
   uint8_t cv_value;
-  Serial.begin(115200);
+  Serial.begin(9600);
   
   
   #if defined(DCCACKPIN)

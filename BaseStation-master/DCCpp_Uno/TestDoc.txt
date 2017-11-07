@@ -1,0 +1,177 @@
+###诊断命令###
+测试：
+	####不接MOTOR SHIELD,测试是否可以控制track power####
+	1. 连接13,3（SIGNAL_ENABLE_PIN_MAIN）输入<1> 13脚灯亮<0>灯灭
+	2. 连接13,11(SIGNAL_ENABLE_PIN_PROG) 输入<1> 13脚灯亮<0>灯灭
+ 
+    ####测试DCC signal####
+    1. 连接13,10(uno)/12(mega) (DCC_SIGNAL_PIN_MAIN) 不管输入<1>或<0> 13脚灯都闪 快闪1，慢闪0
+    2. 然后输入 <D> 灯的闪烁速度会变慢，同时改变了DCC信号的生成速度，之后无法再通信
+    3. 连接13,5(uno)/2(mega) (DCC_SIGNAL_PIN_PROG) 不管输入<1>或<0> 13脚灯都闪 快闪1，慢闪0
+
+    ####测试 motor shield ####
+    1. 关闭arduino, 连接motor shield，不要接到轨道，确认引脚正确定义
+    2. 打开串口，发送<1>，motor shield的4个LED灯亮起
+    3. 发送<D>，4个LED开始闪烁，每个通道的两个灯应该交替闪烁
+
+
+
+
+###单字母命令###
+<s> 控制器状态，返回track power, throttle 状态, turn-out状态 和版本号
+<0> 关闭track power，返回<p0>
+<1> 打开track power, 返回<p1>
+<T> 列出所有定义过的turnouts, 如果有，返回 <H ID ADDRESS SUBADDRESS THROW>，如果没有，返回 <X>
+<S> 列出所有定义过的sensors, 如果有，返回  <Q ID PIN PULLUP>，如果没有，返回 <X>
+
+<Z> 列出所有定义过的输出引脚，如果有，返回  <Y ID PIN IFLAG STATE>，如果没有，返回 <X>
+<Q> 列出所有sensors的状态，如果可用，返回<Q ID>，不可用返回 <q ID> 
+<E> 列出在EEPROM中的所有定义，返回 <e nTurnouts nSensors>
+<e> 删除EEPROM中的所有定义（turnouts, sensors, and outputs）, 返回0，不可复原！
+<D> 诊断命令，参见上文
+
+
+
+
+###机车解码器命令###
+机车控制格式 <t REGISTER CAB SPEED DIRECTION>
+
+示例：<t 1 03 20 1>
+<: 命令开始标志位
+t: 表示机车命令
+1：注册位，从1到MAX_MAIN_REGISTERS （默认12）
+03：机车标志位，短地址（1-127）长地址（128-10293）默认为3
+20：速度，0-126，-1为急停
+1： 方向：1正向，0反向，当速度为0或-1的时候，只会影响车灯
+>: 命令结束标志位
+
+如果命令成功，返回<T 1 20 1>
+T: DCC 机车命令已经发出
+1：注册位为1
+20：速度为20
+1：正向
+
+功能控制格式 <f CAB BYTE1 [BYTE2]>
+F0-F28(F0也被称为FL), 开为1，关为0
+
+F1--F4
+f: 表示车灯，铃，喇叭等命令
+CAB：机车地址（1-127，128-10293）
+BYTE: 128 + F1*1 + F2*2 + F3*4 + F4*8 + F0*16
+128: F0-F4 全部关闭
+128+16=144 F0开，灯亮
+128+16+1=145 F0,F1开，灯亮铃响
+128+16+2=146 F0,F2开，灯亮喇叭响
+128+2=130 F2开，喇叭响
+
+示例：<f 3265 144>
+f: 表示车灯，铃，喇叭等命令
+3265: 机车地址，长地址
+144：F0开，灯亮
+
+F5--F8
+同上，从176开始
+176 + F5*1 + F6*2 + F7*4 + F8*8
+176关闭F5--F8
+
+F9--F12
+160 + F9*1 +F10*2 + F11*4 + F12*8
+160关闭F9-F12
+
+F13--F20
+BYTE1: 222
+BYTE2: F13*1 + F14*2 + F15*4 + F16*8 + F17*16 + F18*32 + F19*64 + F20*128
+0关闭F13-F20
+
+F21--F28
+BYTE1: 223
+BYTE2: F21*1 + F22*2 + F23*4 + F24*8 + F25*16 + F26*32 + F27*64 + F28*128
+0关闭F21-F28
+
+注意：
+此命令没有返回值，也不储存在 BaseStation, 每组命令互不影响，比如想要控制F0,F22，必须发送两条命令
+
+
+
+
+###附件解码器###
+附件控制格式：<a ADDRESS SUBADDRESS ACTIVATE>
+
+<: 命令开始标志位
+a：表示附件命令
+ADDRESS: 主地址（0-511）
+SUBADDRESS: 副地址（0-3）
+ACTIVE: 0关闭，1打开
+>: 命令结束标志位
+
+	####道岔定义####
+	增加/修改：<T ID ADDRESS SUBADDRESS> 命令来定义道岔，如果已经存在，则会修改此道岔。
+		返回值：<O>成功<X>失败
+		ID：0-32767
+		ADDRESS: 主地址（0-511）
+		SUBADDRESS: 副地址（0-3）
+	
+	删除：<T ID> 命令表示，返回值：<O>成功<X>失败
+	列出道岔表：<T>，返回值：<H ID ADDRESS SUBADDRESS THROW>或者<X>
+
+	当所有道岔定义好后，需要<E>命令将其存于EEPROM。<e> 可删除EEPROM
+
+	示例：<T 10 123 3>
+	10：道岔ID
+	123：道岔控制器地址
+	3：道岔将指向3号输出
+
+	然后执行<E>
+
+	####道岔控制####
+	<T ID THROW>
+	THROW: 0 关闭 1 开启
+
+	示例：<T 10 1>
+	10号道岔将开启	返回值：<H 10 1>
+
+
+	####传感器####
+	####ARDUINO输出引脚####
+	！！！！！！！！！！以后看
+
+注意：
+此命令将发送到主轨道，不储存在 BaseStation， 也不储存附件状态
+
+
+
+###机车解码器编程命令###
+
+主轨道（写前不验证）：
+	####写CV（BYTE）####
+	命令格式：< w CAB CV VALUE >
+	CAB: 机车解码器地址（0-127， 128-10293）
+	CV：CV地址（1-1024）
+	VALUE：CV值（0-255）
+	无返回值
+
+	####写CV（BIT）####
+	命令格式： < b CAB CV BIT VALUE >
+	BIT: 第几位（0-7）
+	VALUE: BIT值（0-1）
+
+编程轨道（写前验证）：
+	####写CV（BYTE）####
+	命令格式：< W CV VALUE CALLBACKNUM CALLBACKSUB  >
+	CALLBACKNUM：0-32767中的一个数，用于外部回调函数
+	CALLBACKSUB：同上
+
+	返回值：< r CALLBACKNUM|CALLBACKSUB|CV Value >
+	VALUE: 0-255,或者-1
+
+	####写CV（BIT）####
+	命令格式：< B CV BIT VALUE CALLBACKNUM CALLBACKSUB >
+
+	返回值： < r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE>
+	VALUE：0-1，或者-1
+
+
+	####读取CV（BYTE）####
+	命令格式：< R CV CALLBACKNUM CALLBACKSUB >
+	返回值：< r CALLBACKNUM|CALLBACKSUB|CV VALUE>
+	VALUE: 0-255,或者-1

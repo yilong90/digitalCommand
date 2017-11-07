@@ -137,7 +137,7 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="16" x="126" flags="80000000" y="244" h="32" pid="14" iid="41">
+   <POPUP w="16" x="126" flags="00000000" y="244" h="32" pid="14" iid="41">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -206,7 +206,7 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="16" x="286" flags="80000000" y="404" h="32" pid="14" iid="42">
+   <POPUP w="16" x="286" flags="00000000" y="404" h="32" pid="14" iid="42">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>

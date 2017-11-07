@@ -24,7 +24,7 @@
  * 
  *************************************************/
 
-//#define DEBUG			//リリースのときはコメントアウトすること
+#define DEBUG			//リリースのときはコメントアウトすること
 #define MAN_VER_NUMBER  04   /* Release Ver CV07 */
 #define MAN_ID_NUMBER 108  /* Manufacture ID */
 

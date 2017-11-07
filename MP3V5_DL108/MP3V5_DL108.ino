@@ -23,7 +23,7 @@
  * 
  *************************************************/
 
-//#define DEBUG			//リリースのときはコメントアウトすること
+#define DEBUG			//リリースのときはコメントアウトすること
 #define MAN_VER_NUMBER  8   /* Release Ver CV07 */
 #define MAN_ID_NUMBER 108  /* Manufacture ID */
 
@@ -694,9 +694,9 @@ extern void notifyDccSpeed( uint16_t Addr, DCC_ADDR_TYPE AddrType, uint8_t Speed
 	Serial.print(", SPD: ");
 	Serial.print(Speed);
 	Serial.print(", DIR: ");
-	Serial.print(ForwardDir);
+//	Serial.print(ForwardDir);
 	Serial.print(", MAX: ");
-	Serial.println(MaxSpeed);
+//	Serial.println(MaxSpeed);
 #endif
 
 }

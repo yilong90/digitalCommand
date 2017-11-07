@@ -6,11 +6,11 @@
 
 // ******** UNLESS YOU WANT ALL CV'S RESET UPON EVERY POWER UP
 // ******** AFTER THE INITIAL DECODER LOAD REMOVE THE "//" IN THE FOOLOWING LINE!!
-//#define DECODER_LOADED
+#define DECODER_LOADED
 
 // ******** REMOVE THE "//" IN THE FOOLOWING LINE TO SEND DEBUGGING
 // ******** INFO TO THE SERIAL MONITOR
-//#define DEBUG
+#define DEBUG
 
 
 #include <NmraDcc.h>
@@ -181,6 +181,7 @@ void setup()   //******************************************************
 {
 #ifdef DEBUG
   Serial.begin(115200);
+  Serial.println("aaa");
 #endif
   int i;
   uint8_t cv_value;
