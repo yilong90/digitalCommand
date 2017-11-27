@@ -86,8 +86,8 @@ import java.util.*;
 
 final String   CONTROLLER_VERSION  = "3.0";
 final int      BASE_BAUD       =    115200;
-final int      SCREEN_WIDTH    =    600;
-final int      SCREEN_HEIGHT   =    720;
+final int      SCREEN_WIDTH    =    1366;
+final int      SCREEN_HEIGHT   =    768;
 final String   STATUS_FILE     =    "dccStatus.xml";
 
 //////////////////////////////////////////////////////////////////////////
@@ -157,6 +157,7 @@ void draw(){
     }
   }
   
+  autoPilot.safetyCheck();
     
 } // draw
 

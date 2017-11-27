@@ -78,7 +78,7 @@ CVPair FactoryDefaultCVs [] = {
 void(* resetFunc) (void) = 0;  //declare reset function at address 0
 
 
-uint8_t FactoryDefaultCVIndex = sizeof(FactoryDefaultCVs) / sizeof(CVPair); //4?
+uint8_t FactoryDefaultCVIndex = sizeof(FactoryDefaultCVs) / sizeof(CVPair);
 
 uint16_t limitSpeed(uint16_t inSpeed);
 
@@ -132,7 +132,7 @@ void setup()
 	uint8_t cv_value;
 	
 	//シリアル通信開始
-	Serial.begin(9600);
+	Serial.begin(115200);
 
 	//D9,D10 PWM キャリア周期:31kHz
 	TCCR1B &= B11111000;
@@ -176,7 +176,7 @@ void setup()
   #if !defined(DECODER_DONT_DEFAULT_CV_ON_POWERUP)
 	if ( Dcc.getCV(CV_MULTIFUNCTION_PRIMARY_ADDRESS) == 0xFF ){	 //if eeprom has 0xFF then assume it needs to be programmed
 	  Serial.println("CV Defaulting due to blank eeprom");
-	  notifyCVResetFactoryDefault(); //将FactoryDefaultCVs 写入EEPROM
+	  notifyCVResetFactoryDefault();
 	  
    } else{
 	 Serial.println("CV Not Defaulting");
@@ -198,10 +198,10 @@ void setup()
   gPreviousL5 = millis();
   
   //Init CVs
-  gCV1_SAddr = Dcc.getCV( CV_MULTIFUNCTION_PRIMARY_ADDRESS ) ;//首地址
-  gCV2_Vstart = Dcc.getCV( CV_VSTART ) ;//电机驱动起始电压
-  gCV3_AccRatio = Dcc.getCV( CV_ACCRATIO ) ;//加速时间
-  gCV4_DecRatio = Dcc.getCV( CV_DECCRATIO ) ;//减速时间
+  gCV1_SAddr = Dcc.getCV( CV_MULTIFUNCTION_PRIMARY_ADDRESS ) ;
+  gCV2_Vstart = Dcc.getCV( CV_VSTART ) ;
+  gCV3_AccRatio = Dcc.getCV( CV_ACCRATIO ) ;
+  gCV4_DecRatio = Dcc.getCV( CV_DECCRATIO ) ;
   gCVx_LAddr = (Dcc.getCV( CV_MULTIFUNCTION_EXTENDED_ADDRESS_MSB ) << 8) + Dcc.getCV( CV_MULTIFUNCTION_EXTENDED_ADDRESS_LSB );
   
   Serial.print("CV1(ShortAddr): ");

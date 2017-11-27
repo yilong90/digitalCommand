@@ -543,10 +543,6 @@ uint8_t readCV( unsigned int CV )
 
 uint8_t writeCV( unsigned int CV, uint8_t Value)
 {
-    Serial.print("CV "); 
-   Serial.print(CV); 
-   Serial.print(" write to "); 
-   Serial.println(Value, DEC);
   if( notifyCVWrite )
     return notifyCVWrite( CV, Value ) ;
 

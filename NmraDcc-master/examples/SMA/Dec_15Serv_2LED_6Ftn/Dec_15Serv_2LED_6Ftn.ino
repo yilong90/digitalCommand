@@ -10,7 +10,7 @@
 
 // ******** EMOVE THE "//" IN THE FOOLOWING LINE TO SEND DEBUGGING
 // ******** INFO TO THE SERIAL MONITOR
-#define DEBUG
+//#define DEBUG
 
 
 #include <NmraDcc.h>
